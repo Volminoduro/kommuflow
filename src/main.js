@@ -3,18 +3,22 @@ import './style.css'
 import { useAppStore } from '@/stores/useAppStore'
 import { createPinia } from 'pinia'
 import App from './App.vue'
-import { useNameStore } from '@/stores/useNameStore'
-import { useJsonStore } from '@/stores/useJsonStore'
-import { useConfigRunStore } from '@/stores/useConfigRunStore'
+
+import { createI18nInstance } from '@/i18n'
+
 
 const pinia = createPinia()
 
-const app = createApp(App)
-app.use(pinia)
-app.mount('#app')
+async function bootstrap() {
+	const i18n = await createI18nInstance(localStorage.getItem('lang') || 'fr')
+	const app = createApp(App)
+	app.use(pinia)
+	app.use(i18n)
+	app.mount('#app')
+	// Initialize stores (pass pinia instance to avoid active-Pinia timing issues)
+	useAppStore(pinia)
+	useJsonStore(pinia)
+	useConfigRunStore(pinia)
+}
 
-// Initialize stores (pass pinia instance to avoid active-Pinia timing issues)
-const appStore = useAppStore(pinia)
-const jsonStore = useJsonStore(pinia)
-const nameStore = useNameStore(pinia)
-const configRunStore = useConfigRunStore(pinia)
+bootstrap()

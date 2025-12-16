@@ -23,7 +23,7 @@
         <button 
           @click="toggleAll"
           :class="['w-full text-sm px-2 py-1 rounded mb-2', COLOR_CLASSES.buttonToggle]">
-          {{ store.config.levelRanges.length === LEVEL_RANGES.length ? t('level_ranges_toggle_none') : t('level_ranges_toggle_all') }}
+          {{ store.config.levelRanges.length === LEVEL_RANGES.length ? $t('divers.level_ranges_toggle_none') : $t('divers.level_ranges_toggle_all') }}
         </button>
         <div class="space-y-1">
           <label
@@ -47,16 +47,15 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
-import { useNameStore } from '@/stores/useNameStore'
 import { LEVEL_RANGES } from '@/constants'
 import { COLOR_CLASSES } from '@/constants/colors'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const store = useAppStore()
-const nameStore = useNameStore()
 const isOpen = ref(false)
 const dropdownRef = ref(null)
-
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Fermer le dropdown quand on clique en dehors
 const handleClickOutside = (event) => {
@@ -105,8 +104,8 @@ const toggleAll = () => {
 
 const getDisplayText = () => {
   const count = store.config.levelRanges.length
-  if (count === 0) return t('level_ranges_none')
-  if (count === LEVEL_RANGES.length) return t('level_ranges_all')
+  if (count === 0) return t('divers.level_ranges_none')
+  if (count === LEVEL_RANGES.length) return t('divers.level_ranges_all')
   // Format fixe pour éviter le changement de largeur
   return `${count.toString().padStart(2, ' ')}/${LEVEL_RANGES.length}`
 }

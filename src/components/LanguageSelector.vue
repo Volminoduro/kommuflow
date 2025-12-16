@@ -20,14 +20,15 @@
   </div>
 </template>
 
+
 <script setup>
 import { computed } from 'vue'
-import { useAppStore } from '@/stores/useAppStore'
+import { useI18n } from 'vue-i18n'
 import { WAKFU_TEXT_ALT, WAKFU_TEXT } from '@/constants/colors'
 
-const appStore = useAppStore()
+const { locale } = useI18n()
 
-const currentLanguage = computed(() => appStore.language)
+const currentLanguage = computed(() => locale.value)
 
 const languages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -36,8 +37,9 @@ const languages = [
   { code: 'pt', name: 'Português', flag: '🇵🇹' }
 ]
 
-const handleChange = async (langCode) => {
-  await appStore.setLanguage(langCode)
+const handleChange = (langCode) => {
+  locale.value = langCode
+  localStorage.setItem('lang', langCode)
 }
 
 </script>

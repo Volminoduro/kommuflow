@@ -5,13 +5,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <!-- Search by name -->
         <div class="relative" ref="searchDropdownRef">
-          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ t('prices_search_name') }}</label>
+          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ $t('divers.prices_search_name') }}</label>
           <input
             v-model="searchName"
             @input="onSearchInput"
             @focus="showAutocomplete = true"
             type="text"
-            :placeholder="t('prices_search_placeholder')"
+            :placeholder="$t('divers.prices_search_placeholder')"
             :class="[COLOR_CLASSES.input, 'w-full rounded px-3 py-2']"
           />
           
@@ -27,7 +27,7 @@
                   {{ item.name }}
                 </span>
                 <span :class="COLOR_CLASSES.textMuted" class="text-sm ml-2">
-                  ({{ t('prices_col_level') }} {{ item.level }})
+                  ({{ $t('divers.prices_col_level') }} {{ item.level }})
                 </span>
               </button>
             </div>
@@ -36,7 +36,7 @@
         
         <!-- Filter by rarity -->
         <div class="relative" ref="rarityDropdownRef">
-          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ t('prices_filter_rarity') }}</label>
+          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ $t('divers.prices_filter_rarity') }}</label>
           <button
             @click="isRarityDropdownOpen = !isRarityDropdownOpen"
             :class="[COLOR_CLASSES.select, 'w-full text-left flex items-center justify-between font-mono']"
@@ -52,12 +52,12 @@
                 <button 
                   @click="toggleAllRarities(true)"
                   :class="['flex-1 px-2 py-1 text-xs rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]">
-                  {{ t('level_ranges_toggle_all') }}
+                  {{ $t('divers.level_ranges_toggle_all') }}
                 </button>
                 <button 
                   @click="toggleAllRarities(false)"
                   :class="['flex-1 px-2 py-1 text-xs rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]">
-                  {{ t('level_ranges_toggle_none') }}
+                  {{ $t('divers.level_ranges_toggle_none') }}
                 </button>
               </div>
               
@@ -81,7 +81,7 @@
         
         <!-- Filter by level -->
         <div>
-          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ t('prices_filter_level') }}</label>
+          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ $t('divers.prices_filter_level') }}</label>
           <div class="flex gap-2">
             <input
               v-model.number="filterLevelMin"
@@ -89,7 +89,7 @@
               type="number"
               min="1"
               max="245"
-              :placeholder="t('prices_min')"
+              :placeholder="$t('divers.prices_min')"
               :class="[COLOR_CLASSES.input, 'w-full rounded px-3 py-2']"
             />
             <input
@@ -98,7 +98,7 @@
               type="number"
               min="1"
               max="245"
-              :placeholder="t('prices_max')"
+              :placeholder="$t('divers.prices_max')"
               :class="[COLOR_CLASSES.input, 'w-full rounded px-3 py-2']"
             />
           </div>
@@ -106,7 +106,7 @@
         
         <!-- Filter by instances -->
         <div class="relative" ref="instancesDropdownRef">
-          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ t('prices_filter_instances') }}</label>
+          <label :class="['block text-sm font-medium mb-2', COLOR_CLASSES.textSecondary]">{{ $t('divers.prices_filter_instances') }}</label>
           <button
             @click="isInstancesDropdownOpen = !isInstancesDropdownOpen"
             :class="[COLOR_CLASSES.select, 'w-full text-left flex items-center justify-between font-mono']"
@@ -122,12 +122,12 @@
                 <button 
                   @click="toggleAllInstances(true)"
                   :class="['flex-1 px-2 py-1 text-xs rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]">
-                  {{ t('level_ranges_toggle_all') }}
+                  {{ $t('divers.level_ranges_toggle_all') }}
                 </button>
                 <button 
                   @click="toggleAllInstances(false)"
                   :class="['flex-1 px-2 py-1 text-xs rounded transition-colors', COLOR_CLASSES.button, COLOR_CLASSES.textSecondary]">
-                  {{ t('level_ranges_toggle_none') }}
+                  {{ $t('divers.level_ranges_toggle_none') }}
                 </button>
               </div>
               
@@ -142,7 +142,7 @@
                   class="custom-checkbox-small"
                 />
                 <span :class="COLOR_CLASSES.textNormal">
-                  {{ getInstanceName(inst.id) }}
+                  {{ $t("instances." + inst.id) }}
                 </span>
               </label>
             </div>
@@ -152,7 +152,7 @@
       
       <!-- Items per page selector -->
       <div class="flex items-center gap-4">
-        <label :class="['text-sm font-medium', COLOR_CLASSES.textSecondary]">{{ t('prices_per_page') }}</label>
+        <label :class="['text-sm font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.prices_per_page') }}</label>
         <select
           v-model.number="itemsPerPage"
           :class="[COLOR_CLASSES.select]">
@@ -172,25 +172,25 @@
             <tr>
               <th @click="sortBy('name')" :class="['px-4 py-3 text-left cursor-pointer select-none', 'hover:bg-[#4e4839]']">
                 <div class="flex items-center gap-2">
-                  {{ t('prices_col_name') }}
+                  {{ $t('divers.prices_col_name') }}
                   <span v-if="sortColumn === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 </div>
               </th>
               <th @click="sortBy('level')" :class="['px-4 py-3 text-left cursor-pointer select-none', 'hover:bg-[#4e4839]']">
                 <div class="flex items-center gap-2">
-                  {{ t('prices_col_level') }}
+                  {{ $t('divers.prices_col_level') }}
                   <span v-if="sortColumn === 'level'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 </div>
               </th>
               <th @click="sortBy('instances')" :class="['px-4 py-3 text-left cursor-pointer select-none', 'hover:bg-[#4e4839]']">
                 <div class="flex items-center gap-2">
-                  {{ t('prices_col_instances') }}
+                  {{ $t('divers.prices_col_instances') }}
                   <span v-if="sortColumn === 'instances'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 </div>
               </th>
               <th @click="sortBy('price')" :class="['px-4 py-3 text-right cursor-pointer select-none', 'hover:bg-[#4e4839]']">
                 <div class="flex items-center justify-end gap-2">
-                  {{ t('prices_col_price') }}
+                  {{ $t('divers.prices_col_price') }}
                   <span v-if="sortColumn === 'price'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 </div>
               </th>
@@ -225,7 +225,7 @@
       <!-- Footer with pagination -->
       <div :class="['px-4 py-3 border-t border-[#363634]', COLOR_CLASSES.textLight,  'flex items-center justify-between']">
         <p :class="['text-sm']">
-          {{ t('prices_showing') }} {{ startItem }} - {{ endItem }} {{ t('prices_of') }} {{ filteredAndSortedItems.length }} {{ t('prices_items') }}
+          {{ $t('divers.prices_showing') }} {{ startItem }} - {{ endItem }} {{ $t('divers.prices_of') }} {{ filteredAndSortedItems.length }} {{ $t('divers.prices_items') }}
         </p>
         
         <div class="flex items-center gap-2">
@@ -243,7 +243,7 @@
           </button>
           
           <span :class="['px-4 text-sm', COLOR_CLASSES.textNormal]">
-            {{ t('prices_page') }} {{ currentPage }} / {{ totalPages }}
+            {{ $t('divers.prices_page') }} {{ currentPage }} / {{ totalPages }}
           </span>
           
           <button
@@ -266,19 +266,17 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useNameStore } from '@/stores/useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useClickOutside } from '@/composables/useClickOutside'
 import { COLOR_CLASSES } from '@/constants/colors'
 import { RARITY_COLORS } from '@/constants'
 import { formatNumber } from '@/utils/formatters'
 import { useJsonStore } from '@/stores/useJsonStore'
-import { getInstanceName } from '@/utils/getInstanceName'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const jsonStore = useJsonStore()
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Filters with localStorage persistence
 const searchName = useLocalStorage('kommuflow_prices_searchName', '')
@@ -307,7 +305,7 @@ const allInstancesList = computed(() => {
   const instances = jsonStore.rawInstances || []
   return instances.map(inst => ({
     id: inst.id,
-    name: getInstanceName(inst.id)
+    name: t("instances." + inst.id)
   })).sort((a, b) => a.name.localeCompare(b.name))
 })
 
@@ -337,12 +335,12 @@ const allItems = computed(() => {
   return items.map(item => {
     const instanceIds = itemInstances[item.id] || []
     const instanceNames = instanceIds
-      .map(id => getInstanceName(id))
+      .map(id => t("instances." + id))
       .sort((a, b) => a.localeCompare(b))
     
     return {
       id: item.id,
-      name: nameStore.names?.items?.[item.id] || `Item #${item.id}`,
+      name: t("items." + item.id) || `Item #${item.id}`,
       rarity: item.rarity || 0,
       level: item.level || 0,
       price: priceMap[item.id] || null,
@@ -482,8 +480,8 @@ function toggleAllRarities(selectAll) {
 
 function getRarityDisplayText() {
   const count = filterRarities.value.length
-  if (count === 0) return t('level_ranges_none')
-  if (count === 8) return t('level_ranges_all')
+  if (count === 0) return t('divers.level_ranges_none')
+  if (count === 8) return t('divers.level_ranges_all')
   return `${count.toString().padStart(2, ' ')}/8`
 }
 
@@ -508,8 +506,8 @@ function getInstancesDisplayText() {
   const arr = filterInstances.value || []
   const count = arr.length
   const total = allInstancesList.value.length
-  if (count === 0) return t('level_ranges_none')
-  if (count === total) return t('level_ranges_all')
+  if (count === 0) return t('divers.level_ranges_none')
+  if (count === total) return t('divers.level_ranges_all')
   return `${count.toString().padStart(2, ' ')}/${total}`
 }
 
@@ -565,15 +563,15 @@ function getRarityColor(rarity) {
 
 function getRarityName(rarity) {
   const names = {
-    0: t('rarity_common'),
-    1: t('rarity_unusual'),
-    2: t('rarity_rare'),
-    3: t('rarity_mythical'),
-    4: t('rarity_legendary'),
-    5: t('rarity_relic'),
-    6: t('rarity_souvenir'),
-    7: t('rarity_epic')
+    0: t('divers.rarity_common'),
+    1: t('divers.rarity_unusual'),
+    2: t('divers.rarity_rare'),
+    3: t('divers.rarity_mythical'),
+    4: t('divers.rarity_legendary'),
+    5: t('divers.rarity_relic'),
+    6: t('divers.rarity_souvenir'),
+    7: t('divers.rarity_epic')
   }
-  return names[rarity] || t('rarity_common')
+  return names[rarity] || t('divers.rarity_common')
 }
 </script>

@@ -11,7 +11,7 @@
         <BossIcon :boss-id="props.instance.bossId" />
 
         <div :class="['font-bold truncate', COLOR_CLASSES.textLight]">
-          {{ getInstanceName(props.instance.id) }} (niv. {{ props.instance.level }})
+          {{ $t("instances." + props.instance.id) }} ({{ $t('divers.niveau_reduit') }} {{ props.instance.level }})
         </div>
         
         <svg 
@@ -32,15 +32,15 @@
           v-if="hasRuns"
           @click="removeAllRuns"
           :class="['px-3 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
-          :title="t('runs_remove_all') || 'Supprimer tous les runs'">
-          ✕ {{ t('runs_all') || 'Tous' }}
+          :title="$t('divers.runs_remove_all') || 'Supprimer tous les runs'">
+          ✕ {{ $t('divers.runs_all') || 'Tous' }}
         </button>
 
         <!-- Add run button -->
         <button 
           @click="addRun"
           :class="['px-3 py-1 rounded text-sm font-semibold transition-colors', 'bg-green-900/50 hover:bg-green-800 text-green-200']"
-          :title="t('runs_add') || 'Ajouter un run'">
+          :title="$t('divers.runs_add') || 'Ajouter un run'">
           +
         </button>
       </div>
@@ -53,18 +53,18 @@
         <div v-if="!instance.isDungeon" :class="['px-4 py-2 border-t border-[#363634] flex items-center gap-2', COLOR_CLASSES.bgSecondary]">
           <div class="flex items-center gap-2 flex-1">
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_booster') }}
+              {{ $t('divers.config_booster') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
-              Vague départ
+              {{ $t('divers.config_wave_start') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 120px; text-align: center;">
-              Vagues faites
+              {{ $t('divers.config_waves_done') }}
             </div>
             <!-- Empty spacers to align with dungeon layout (Stasis, Stèles, Stèles Interv.) -->
             <div style="width: 30px;"></div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              Temps (min)
+              {{ $t('divers.config_time') }} (min)
             </div>
           </div>
           <div style="width: 60px;"></div> <!-- Space for delete button -->
@@ -74,25 +74,25 @@
         <div v-else :class="['px-2 py-2 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
           <div class="flex items-center gap-2 flex-1">
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_modulated') }}
+              {{ $t('divers.config_modulated') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_booster') }}
+              {{ $t('divers.config_booster') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_stasis') }}
+              {{ $t('divers.config_stasis') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_steles') }}
+              {{ $t('divers.config_steles') }}
             </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 80px; text-align: center;">
-              {{ t('config_stele_intervention') }}
+              {{ $t('divers.config_stele_intervention') }}
             </div>
              <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-               {{ t('config_stele_archi') }}
+               {{ $t('divers.config_stele_archi') }}
              </div>
             <div :class="['text-xs font-semibold', COLOR_CLASSES.textSecondary]" style="width: 60px; text-align: center;">
-              {{ t('config_time') }}
+              {{ $t('divers.config_time') }}
             </div>
           </div>
           <div style="width: 60px;"></div> <!-- Space for delete button -->
@@ -113,7 +113,7 @@
     <div 
       v-if="isExpanded && !hasRuns" 
       :class="['px-5 py-4 text-center border-t border-[#363634]', COLOR_CLASSES.bgSecondary, COLOR_CLASSES.textMuted]">
-      {{ t('runs_empty') || 'Aucun run configuré. Cliquez sur "+" pour en ajouter un.' }}
+      {{ $t('divers.runs_empty') || 'Aucun run configuré. Cliquez sur "+" pour en ajouter un.' }}
     </div>
   </div>
 </template>
@@ -121,11 +121,9 @@
 <script setup>
 import { computed } from 'vue'
 import { COLOR_CLASSES } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
 import RunConfigRow from '@/components/RunConfig/RunConfigRow.vue'
 import BossIcon from '@/components/BossIcon.vue'
 import { useConfigRunStore } from '@/stores/useConfigRunStore'
-import { getInstanceName } from '@/utils/getInstanceName'
 
 const props = defineProps({
   instance: {
@@ -135,9 +133,6 @@ const props = defineProps({
 })
 
 const configRunStore = useConfigRunStore()
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 const isExpanded = computed(() => configRunStore.expandedInstances.has(props.instance.id))
 const runs = computed(() => configRunStore.getRunsForInstance(props.instance.id))

@@ -25,7 +25,7 @@
           @click="subTab = 'config'" 
           :class="['flex-1 py-2 transition-all font-semibold text-base', subTab === 'config' ? COLOR_CLASSES.activeTab : COLOR_CLASSES.inactiveTab]"
           :style="subTab === 'config' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
-          {{ t('runs_config') || 'Configuration' }}
+          {{ $t('divers.runs_config') || 'Configuration' }}
         </button>
       </nav>
 
@@ -41,8 +41,8 @@
         <button 
           @click="importRuns"
           :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-green-900/50 hover:bg-green-800 text-green-200']"
-          :title="t('runs_import') || 'Importer depuis le presse-papier'">
-          📥 {{ t('runs_import') || 'Importer' }}
+          :title="$t('divers.runs_import') || 'Importer depuis le presse-papier'">
+          📥 {{ $t('divers.runs_import') || 'Importer' }}
         </button>
 
         <!-- Export button -->
@@ -50,8 +50,8 @@
           v-if="hasAnyRuns"
           @click="exportRuns"
           :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-blue-900/50 hover:bg-blue-800 text-blue-200']"
-          :title="t('runs_export') || 'Copier la configuration dans le presse-papier'">
-          📋 {{ t('runs_export') || 'Exporter' }}
+          :title="$t('divers.runs_export') || 'Copier la configuration dans le presse-papier'">
+          📋 {{ $t('divers.runs_export') || 'Exporter' }}
         </button>
 
         <!-- Remove all button -->
@@ -59,14 +59,14 @@
           v-if="hasAnyRuns"
           @click="removeAllRuns"
           :class="['px-4 py-2 text-sm rounded font-semibold transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
-          :title="t('runs_remove_all') || 'Supprimer tous les runs'">
-          ✕ {{ t('runs_remove_all') || 'Supprimer tous les runs' }}
+          :title="$t('divers.runs_remove_all') || 'Supprimer tous les runs'">
+          ✕ {{ $t('divers.runs_remove_all') || 'Supprimer tous les runs' }}
         </button>
 
         <!-- Info text -->
         <div class="flex-1 text-right">
           <span :class="['text-sm', COLOR_CLASSES.textSecondary]">
-            {{ sortedInstances.length }} {{ t('runs_instances') || 'instances disponibles' }}
+            {{ sortedInstances.length }} {{ $t('divers.runs_instances') || 'instances disponibles' }}
           </span>
         </div>
       </div>
@@ -85,7 +85,7 @@
 
       <!-- Runs list -->
       <div v-if="!jsonStore.loaded" class="text-center">
-        <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') }}</p>
+        <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ $t('divers.loading') }}</p>
       </div>
       <div v-else-if="sortedHourRuns.length === 0" :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-6']">
         <!-- No runs configured at all -->
@@ -94,14 +94,14 @@
           :class="[COLOR_CLASSES.textSecondary, 'cursor-pointer hover:underline']"
           @click="subTab = 'config'"
         >
-          {{ t('kamas_hour_no_runs') || 'Aucun run configuré. Allez dans l\'onglet "Configuration" pour en créer.' }}
+          {{ $t('divers.kamas_hour_no_runs') || 'Aucun run configuré. Allez dans l\'onglet "Configuration" pour en créer.' }}
         </p>
 
         <!-- Runs exist but none pass current filters -->
         <p
           v-else
           :class="[COLOR_CLASSES.textSecondary]">
-          {{ t('kamas_hour_no_runs_matching_filters') || 'Aucun run configuré ne correspond aux filtres actuels. Vérifiez vos filtres ou rendez-vous dans l\'onglet "Configuration".' }}
+          {{ $t('divers.kamas_hour_no_runs_matching_filters') || 'Aucun run configuré ne correspond aux filtres actuels. Vérifiez vos filtres ou rendez-vous dans l\'onglet "Configuration".' }}
         </p>
       </div>
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -118,7 +118,7 @@
     <div v-else class="px-8 py-6 max-w-[1920px] mx-auto">
     <!-- Loading state -->
     <div v-if="!jsonStore.loaded" class="text-center py-8">
-      <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ t('loading') || 'Chargement des données...' }}</p>
+      <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ $t('divers.loading') || 'Chargement des données...' }}</p>
     </div>
 
     <!-- Instances grid -->
@@ -137,22 +137,21 @@
 import { computed } from 'vue'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useConfigRunStore } from '@/stores/useConfigRunStore'
-import { useNameStore } from '@/stores/useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
 import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 import { calculateInstanceForRunWithPricesAndPassFilters } from '@/utils/instanceProcessor'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const jsonStore = useJsonStore()
-const nameStore = useNameStore()
 const configRunStore = useConfigRunStore()
 
 // Sub-tab management
 const subTab = useLocalStorage('kommuflow_runs_subTab', 'time')
-
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Get all instances sorted by level (enriched with name and bossId for UI)
 const sortedInstances = computed(() => {
@@ -196,7 +195,7 @@ function toggleAll() {
 }
 
 function removeAllRuns() {
-  if (confirm(t('runs_confirm_remove_all') || 'Êtes-vous sûr de vouloir supprimer tous les runs ?')) {
+  if (confirm(t('divers.runs_confirm_remove_all') || 'Êtes-vous sûr de vouloir supprimer tous les runs ?')) {
     configRunStore.removeAllRuns()
   }
 }

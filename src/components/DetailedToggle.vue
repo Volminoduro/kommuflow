@@ -4,18 +4,14 @@
     class="px-3 py-1 rounded-md border transition-colors flex items-center gap-2"
     :class="buttonClasses"
   >
-    <span v-if="detailed" class="text-sm font-medium">{{ t('display_detailed') }}</span>
-    <span v-else class="text-sm font-medium">{{ t('display_simple') }}</span>
+    <span v-if="detailed" class="text-sm font-medium">{{ $t('divers.display_detailed') }}</span>
+    <span v-else class="text-sm font-medium">{{ $t('divers.display_simple') }}</span>
   </button>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
-import { useNameStore } from '@/stores/useNameStore'
-
-const nameStore = useNameStore()
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 const detailed = useLocalStorage('kommuflow_detailed_view', false)
 

@@ -26,9 +26,6 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useNameStore } from '@/stores/useNameStore'
-
-const nameStore = useNameStore()
 
 const warnings = computed(() => {
   const list = []

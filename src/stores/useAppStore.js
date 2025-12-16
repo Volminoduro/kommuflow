@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { STORAGE_KEYS, DEFAULT_CONFIG } from '@/constants'
 import { useJsonStore } from './useJsonStore'
-import { useNameStore } from './useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 
 export const useAppStore = defineStore('app', () => {
@@ -29,17 +28,6 @@ export const useAppStore = defineStore('app', () => {
 
   // Compose other stores
   const jsonStore = useJsonStore()
-  const nameStore = useNameStore()
-
-  // Change language globally and reload names
-  async function setLanguage(lang) {
-    language.value = lang
-    try {
-      await nameStore.loadNames(lang)
-    } catch (e) {
-      console.error('Erreur chargement noms pour la langue', lang, e)
-    }
-  }
 
   // Initialize main data on app start
   async function initData(server) {
@@ -47,7 +35,6 @@ export const useAppStore = defineStore('app', () => {
     try {
       await Promise.all([
         jsonStore.loadAllData(server),
-        nameStore.loadNames(lang)
       ])
       // Ensure persisted config.server is valid; if not, set to DEFAULT_CONFIG.server or first available
       try {
@@ -76,8 +63,6 @@ export const useAppStore = defineStore('app', () => {
     language,
     userRotations,
 
-    // composed stores and actions
-    setLanguage,
     initData
   }
 })

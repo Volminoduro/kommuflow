@@ -1,7 +1,7 @@
 <template>
   <!-- Rift (Brèche) Configuration -->
-  <div v-if="run.isRift" :class="['px-1 py-3 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
-    <div class="flex items-center gap-1 flex-1">
+  <div v-if="run.isRift" :class="['px-4 py-2 border-t border-[#363634] flex items-center', COLOR_CLASSES.bgSecondary]">
+    <div class="flex items-center gap-2 flex-1">
       <!-- Booster -->
       <div class="flex justify-center" style="width: 60px;">
         <input 
@@ -13,7 +13,7 @@
       </div>
 
       <!-- Vague de départ -->
-      <div class="flex justify-center" style="width: 120px;">
+      <div class="flex justify-center" style="width: 60px;">
         <input 
           type="number"
           :value="run.startingWave"
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Nombre de vagues effectuées -->
-      <div class="flex justify-center" style="width: 120px;">
+      <div class="flex justify-center" style="width: 60px;">
         <input 
           type="number"
           :value="run.wavesCompleted"
@@ -59,7 +59,7 @@
       <button 
         @click="emit('remove')"
         :class="['px-1 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
-        :title="t('button_remove') || 'Supprimer'">
+        :title="$t('divers.button_remove') || 'Supprimer'">
         ✕
       </button>
     </div>
@@ -137,7 +137,7 @@
           type="number"
           :value="run.time"
           @input="updateField('time', $event.target.value ? Math.max(1, parseInt($event.target.value)) : null)"
-          :placeholder="t('config_time_placeholder') || 'min'"
+          :placeholder="$t('divers.config_time_placeholder') || 'min'"
           :class="[COLOR_CLASSES.input, 'text-sm py-1 text-center']"
           style="width: 50px;"
           min="1"
@@ -150,7 +150,7 @@
       <button 
         @click="emit('remove')"
         :class="['px-1 py-1 rounded text-sm transition-colors', 'bg-red-900/50 hover:bg-red-800 text-red-200']"
-        :title="t('button_remove') || 'Supprimer'">
+        :title="$t('divers.button_remove') || 'Supprimer'">
         ✕
       </button>
     </div>
@@ -159,8 +159,6 @@
 
 <script setup>
 import { COLOR_CLASSES } from '@/constants/colors'
-import { useJsonStore } from '@/stores/useJsonStore'
-import { useNameStore } from '@/stores/useNameStore'
 
 const props = defineProps({
   run: {
@@ -170,10 +168,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update', 'remove'])
-
-const jsonStore = useJsonStore()
-const nameStore = useNameStore()
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 function updateField(field, value) {
   emit('update', { ...props.run, [field]: value })

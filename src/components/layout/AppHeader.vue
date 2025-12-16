@@ -23,19 +23,19 @@
         @click="mainTab = 'rentability'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'rentability' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'rentability' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
-        {{ t('tab_rentability') }}
+        {{ $t('divers.tab_rentability') }}
       </button>
       <button 
         @click="mainTab = 'runs'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', COLOR_CLASSES.tabSeparator, mainTab === 'runs' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="`border-right-color: ${TAB_SEPARATOR} !important; ${mainTab === 'runs' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''}`">
-        {{ t('tab_runs') }}
+        {{ $t('divers.tab_runs') }}
       </button>
       <button 
         @click="mainTab = 'prices'" 
         :class="['flex-1 py-2 transition-all font-semibold text-lg', mainTab === 'prices' ? COLOR_CLASSES.activeMainTab : COLOR_CLASSES.inactiveMainTab]"
         :style="mainTab === 'prices' ? `text-shadow: ${ACTIVE_TAB_TEXT_SHADOW};` : ''">
-        {{ t('tab_prices') }}
+        {{ $t('divers.tab_prices') }}
       </button>
     </nav>
   </header>
@@ -48,14 +48,9 @@ import FloatingFilter from '@/components/FloatingFilter.vue'
 import HeaderAlerts from '@/components/HeaderAlerts.vue'
 import DisplayToggle from '@/components/DetailedToggle.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
-import { useNameStore } from '@/stores/useNameStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 
 const mainTab = useLocalStorage('kommuflow_mainTab', 'rentability')
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
-
 // Alerts are delegated to `HeaderAlerts` component
 
 // Expose header height as a CSS variable so other views can stick just below it

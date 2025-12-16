@@ -13,7 +13,7 @@
           <li v-for="item in displayedItems" :key="item.itemId" class="px-5 py-2 flex justify-between items-center">
             <div class="flex items-center gap-3">
               <div :class="COLOR_CLASSES.textNormal">
-                <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ nameStore.names.items[item.itemId] || ('#' + item.itemId) }}</span>
+                <span :class="'font-bold'" :style="{ color: getRarityColor(item.rarity) }">{{ $t("items." + item.itemId) }}</span>
                 <template v-if="detailedView">
                   <span> x{{ formatQuantity(item.quantity) }} ({{ formatRate(item.rate) }}%{{ getSteleInfo(item) }})</span>
                 </template>
@@ -43,8 +43,9 @@ import { formatConfigRun } from '@/utils/runHelpers'
 import { getSteleInfo, getRarityColor } from '@/utils/itemHelpers'
 import { COLOR_CLASSES } from '@/constants/colors'
 import InstanceBaseCard from './InstanceBaseCard.vue'
-import { useNameStore } from '@/stores/useNameStore'
-import { getInstanceName } from '../../utils/getInstanceName'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   instance: {
@@ -91,7 +92,6 @@ function toggleExpand() {
 
 const INITIAL_ITEMS_SHOWN = 15
 const showAllItems = ref(false)
-const nameStore = useNameStore()
 
 const appStore = useAppStore()
 const localTimePeriod = useLocalStorage('kommuflow_time_period', 60)
@@ -140,9 +140,9 @@ const toggleShowAll = () => {
 const instanceTitle = computed(() => {
   const displayInst = displayInstance.value
   if (!displayInst) return ''
-  const baseName = getInstanceName(displayInst.id) || ('Instance ' + displayInst.id)
+  const baseName = t("instances." + displayInst.id) || ('Instance ' + displayInst.id)
   const level = displayInst.level
-  const levelText = nameStore.names.divers?.['niveau_reduit'] || 'Niv.'
+  const levelText = t('divers.niveau_reduit') || 'Niv.'
 
   // If there is a runConfig (manual or run-mode), include config/time and iterations
   if (props.config) {

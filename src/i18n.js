@@ -1,53 +1,30 @@
-// Chargement dynamique des fichiers de langue (names)
 
-import { ref } from 'vue'
-import { useLocalStorage } from '@/composables/useLocalStorage'
+import { createI18n } from 'vue-i18n'
 
-export const currentLang = useLocalStorage('lang', 'fr')
-export const translations = ref({})
-
-
-
-export async function loadLang(lang) {
-  try {
-    const data = await fetch(`/names/${lang}.json`).then(r => r.json())
-    const result = {}
-    for (const key in data) {
-      if (Array.isArray(data[key])) {
-        // Catégorie de type tableau d'objets {id, name}
-        result[key] = {}
-        for (const entry of data[key]) {
-          if (entry.id !== undefined && entry.name !== undefined) {
-            result[key][entry.id] = entry.name
-          }
-        }
-      } else if (typeof data[key] === 'object' && data[key] !== null) {
-        // Catégorie de type objet plat (ex: divers)
-        result[key] = { ...data[key] }
-      }
+// Fonction utilitaire pour charger dynamiquement les fichiers JSON de traduction
+async function loadLocaleMessages() {
+  const locales = import.meta.glob('./names/*.json', { eager: true })
+  const messages = {}
+  for (const path in locales) {
+    // Récupère le code langue à partir du nom de fichier (ex: fr.json)
+    const match = path.match(/\/([a-z]{2})\.json$/i)
+    if (match) {
+      const lang = match[1]
+      // On place tout le contenu du JSON sous la clé racine (ex: divers, items, ...)
+      messages[lang] = locales[path].default || locales[path]
     }
-    translations.value = result
-    currentLang.value = lang
-  } catch (e) {
-    translations.value = {}
   }
+  return messages
 }
 
+const messagesPromise = loadLocaleMessages()
 
-// Traduction par catégorie et clé
-export function t(category, key) {
-  if (translations.value[category] && translations.value[category][key] !== undefined) {
-    return translations.value[category][key]
-  }
-  return key
-}
-
-// Pour compatibilité : tDivers(key) => t('divers', key)
-export function tDivers(key) {
-  return t('divers', key)
-}
-
-// Charger la langue sauvegardée au démarrage
-if (currentLang.value) {
-  loadLang(currentLang.value)
+export async function createI18nInstance(locale = 'fr') {
+  const messages = await messagesPromise
+  return createI18n({
+    legacy: false,
+    locale,
+    fallbackLocale: 'fr',
+    messages
+  })
 }

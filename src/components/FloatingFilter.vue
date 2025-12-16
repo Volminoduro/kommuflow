@@ -8,11 +8,11 @@
         <table class="w-full" style="table-layout: fixed;">
           <thead>
             <tr>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_rate') }}</th>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_profit') }}</th>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('config_min_total') }}</th>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ t('level_ranges_title') }}</th>
-              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ t('config_server') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_min_rate') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_min_profit') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_min_total') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]">{{ $t('divers.level_ranges_title') }}</th>
+              <th :class="['text-center font-medium pb-2 text-base', COLOR_CLASSES.textSecondary]" colspan="2">{{ $t('divers.config_server') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -66,7 +66,7 @@
                     :class="[COLOR_CLASSES.select, 'w-[160px]']"
                   >
                     <option v-for="server in jsonStore.servers" :key="server.id" :value="server.id">
-                      {{ t(server.name_key) }}
+                      {{ $t("divers." + server.name_key) }}
                     </option>
                   </select>
                   <div :class="['text-xs leading-tight w-[70px] text-center', COLOR_CLASSES.textMuted]">
@@ -74,7 +74,7 @@
                       <div>{{ jsonStore.pricesLastUpdate.split(' ')[0] }}</div>
                       <div>{{ jsonStore.pricesLastUpdate.split(' ')[1] }}</div>
                     </div>
-                    <span v-else>{{ t('prices_no_data') }}</span>
+                    <span v-else>{{ $t('divers.prices_no_data') }}</span>
                   </div>
                 </div>
               </td>
@@ -87,7 +87,6 @@
 
 <script setup>
 import { useAppStore } from '@/stores/useAppStore'
-import { useNameStore } from '@/stores/useNameStore'
 import { formatInputNumber, formatRateInput, parseFormattedNumber } from '@/utils/formatters'
 import { COLOR_CLASSES } from '@/constants/colors'
 import LevelRangeFilter from './LevelRangeFilter.vue'
@@ -95,9 +94,6 @@ import { useJsonStore } from '@/stores/useJsonStore'
 
 const store = useAppStore()
 const jsonStore = useJsonStore()
-const nameStore = useNameStore()
-
-const t = (key) => nameStore.names?.divers?.[key] || key
 
 // Generic numeric field updater
 const updateNumericField = (event, fieldName, parser = parseInt) => {

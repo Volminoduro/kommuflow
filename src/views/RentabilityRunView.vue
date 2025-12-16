@@ -13,7 +13,7 @@
           <!-- Config row: Modulé, Booster, Stasis, Stèles, Stèles Interv. -->
           <div class="flex items-center gap-6">
             <div class="flex flex-col items-center gap-1">
-              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_modulated') }}</label>
+              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_modulated') }}</label>
               <input 
                 type="checkbox" 
                 v-model="appStore.config.isModulated"
@@ -22,7 +22,7 @@
             </div>
 
             <div class="flex flex-col items-center gap-1">
-              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_booster') }}</label>
+              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_booster') }}</label>
               <input 
                 type="checkbox" 
                 v-model="appStore.config.isBooster"
@@ -31,7 +31,7 @@
             </div>
 
             <div class="flex flex-col items-center gap-1">
-              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_stasis') }}</label>
+              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_stasis') }}</label>
               <select 
                 v-model.number="appStore.config.stasis"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex flex-col items-center gap-1">
-              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_steles') }}</label>
+              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_steles') }}</label>
               <select 
                 v-model.number="appStore.config.steles"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
@@ -51,7 +51,7 @@
             </div>
 
             <div class="flex flex-col items-center gap-1">
-              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_stele_intervention') }}</label>
+              <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_stele_intervention') }}</label>
               <select 
                 v-model.number="appStore.config.steleIntervention"
                 :class="[COLOR_CLASSES.select, 'w-[65px]']"
@@ -61,7 +61,7 @@
             </div>
              <!-- Stèle Archi -->
              <div class="flex flex-col items-center gap-1">
-               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ tDivers('config_stele_archi') }}</label>
+               <label :class="['text-xs font-medium', COLOR_CLASSES.textSecondary]">{{ $t('divers.config_stele_archi') }}</label>
                <input
                  type="checkbox"
                  v-model="appStore.config.isSteleArchi"
@@ -74,7 +74,7 @@
 
       <!-- Disclaimer -->
       <div :class="['px-4 py-2 border-b', COLOR_CLASSES.bgSecondaryOpacity, COLOR_CLASSES.borderPrimary]">
-        <p :class="['text-sm italic', COLOR_CLASSES.textSecondary]">{{ tDivers('disclaimer_rifts_excluded') }}</p>
+        <p :class="['text-sm italic', COLOR_CLASSES.textSecondary]">{{ $t('divers.disclaimer_rifts_excluded') }}</p>
       </div>
     </div>
     
@@ -95,7 +95,6 @@
 </template>
 
 <script setup>
-import { tDivers } from '@/i18n'
 import { computed } from 'vue'
 import { useAppStore } from '@/stores/useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
