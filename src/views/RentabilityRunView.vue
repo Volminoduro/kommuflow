@@ -102,6 +102,7 @@ import InstanceCard from '@/components/Instance/InstanceCard.vue'
 import ToggleAllButton from '@/components/ToggleAllButton.vue'
 import { COLOR_CLASSES } from '@/constants/colors'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 import { calculateInstanceForRunWithPricesAndPassFilters } from '@/utils/instanceProcessor'
 
 
@@ -109,7 +110,7 @@ const appStore = useAppStore()
 const jsonStore = useJsonStore()
 
 // Gestion de l'expansion pour Kamas/Run (persistée en localStorage)
-const expandedRun = useLocalStorage('kommuflow_expanded_run', [])
+const expandedRun = useLocalStorage(LS_KEYS.EXPANDED_RUN, [])
 
 // Expanded run keys are persisted in `expandedRun` (localStorage)
 

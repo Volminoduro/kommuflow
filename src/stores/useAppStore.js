@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { STORAGE_KEYS, DEFAULT_CONFIG } from '@/constants'
-import { useJsonStore } from './useJsonStore'
+import { DEFAULT_CONFIG } from '@/constants'
+import { LS_KEYS } from '@/constants/localStorageKeys'
+import { useJsonStore } from '@/stores/useJsonStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 
 export const useAppStore = defineStore('app', () => {
-  const LS_KEY = STORAGE_KEYS.CONFIG
-  const LANG_KEY = STORAGE_KEYS.LANGUAGE
-
+  const LS_KEY = LS_KEYS.CONFIG
   // Persisted config (merge with defaults)
   const config = useLocalStorage(LS_KEY, { ...DEFAULT_CONFIG }, { deep: true })
   // Ensure missing default keys are present (in case stored value is partial)
@@ -16,22 +14,11 @@ export const useAppStore = defineStore('app', () => {
   } catch (e) {
     config.value = { ...DEFAULT_CONFIG }
   }
-
-  const language = useLocalStorage(LANG_KEY, 'fr')
-  const userRotations = ref([])
-
-  function updateConfig(newConfig) {
-    config.value = { ...config.value, ...newConfig }
-  }
-
-  // persistence handled by useLocalStorage
-
   // Compose other stores
   const jsonStore = useJsonStore()
 
   // Initialize main data on app start
   async function initData(server) {
-    const lang = language.value || 'fr'
     try {
       await Promise.all([
         jsonStore.loadAllData(server),
@@ -59,10 +46,6 @@ export const useAppStore = defineStore('app', () => {
   return {
     // persisted app-level state
     config,
-    updateConfig,
-    language,
-    userRotations,
-
     initData
   }
 })

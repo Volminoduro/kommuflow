@@ -42,6 +42,7 @@
 import { COLOR_CLASSES } from '@/constants/colors'
 import { open } from '@tauri-apps/plugin-dialog'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 import { join, homeDir } from '@tauri-apps/api/path';
 
 async function selectFolder() {
@@ -72,10 +73,10 @@ async function selectFolder() {
   }
 }
 
-const folderPath = useLocalStorage("settings.folderPath")
-const deleteAfterOCR = useLocalStorage("settings.deleteAfterOCR", false)
-const launchOnStartup = useLocalStorage("settings.launchOnStartup", false)
-const minimizeToTray = useLocalStorage("settings.minimizeToTray", false)
+const folderPath = useLocalStorage(LS_KEYS.SETTINGS_FOLDER_PATH)
+const deleteAfterOCR = useLocalStorage(LS_KEYS.SETTINGS_DELETE_AFTER_OCR, false)
+const launchOnStartup = useLocalStorage(LS_KEYS.SETTINGS_LAUNCH_ON_STARTUP, false)
+const minimizeToTray = useLocalStorage(LS_KEYS.SETTINGS_MINIMIZE_TO_TRAY, false)
 // Synchronise l'option minimizeToTray avec le backend Rust
 /* watch(minimizeToTray, (val) => {
   invoke('set_minimize_to_tray', { value: val });

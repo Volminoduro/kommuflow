@@ -1,13 +1,11 @@
 import { createApp } from 'vue'
-import './style.css'
+import '@/style.css'
 import { useAppStore } from '@/stores/useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useConfigRunStore } from '@/stores/useConfigRunStore'
 import { createPinia } from 'pinia'
-import App from './App.vue'
-
+import App from '@/App.vue'
 import { createI18nInstance } from '@/i18n'
-
 
 const pinia = createPinia()
 

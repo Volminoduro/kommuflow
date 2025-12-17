@@ -55,8 +55,9 @@ import HeaderAlerts from '@/components/HeaderAlerts.vue'
 import DisplayToggle from '@/components/DetailedToggle.vue'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 
-const mainTab = useLocalStorage('kommuflow_mainTab', 'rentability')
+const mainTab = useLocalStorage(LS_KEYS.MAIN_TAB, 'rentability')
 // Alerts are delegated to `HeaderAlerts` component
 
 // Expose header height as a CSS variable so other views can stick just below it

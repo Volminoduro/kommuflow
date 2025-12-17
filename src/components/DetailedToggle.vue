@@ -12,8 +12,9 @@
 <script setup>
 import { computed } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 
-const detailed = useLocalStorage('kommuflow_detailed_view', false)
+const detailed = useLocalStorage(LS_KEYS.DETAILED_VIEW, false)
 
 function toggle() {
   detailed.value = !detailed.value

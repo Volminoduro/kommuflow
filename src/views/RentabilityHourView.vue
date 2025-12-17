@@ -85,7 +85,6 @@
 
       <!-- Runs list -->
       <div v-if="!jsonStore.loaded" class="text-center">
-        <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ $t('divers.loading') }}</p>
       </div>
       <div v-else-if="sortedHourRuns.length === 0" :class="[COLOR_CLASSES.bgSecondary, COLOR_CLASSES.borderCard, 'rounded-lg p-6']">
         <!-- No runs configured at all -->
@@ -118,7 +117,6 @@
     <div v-else class="px-8 py-6 max-w-[1920px] mx-auto">
     <!-- Loading state -->
     <div v-if="!jsonStore.loaded" class="text-center py-8">
-      <p :class="['text-lg', COLOR_CLASSES.textLoading]">{{ $t('divers.loading') || 'Chargement des données...' }}</p>
     </div>
 
     <!-- Instances grid -->
@@ -138,6 +136,7 @@ import { computed } from 'vue'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useConfigRunStore } from '@/stores/useConfigRunStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 import { COLOR_CLASSES, TAB_SEPARATOR, ACTIVE_TAB_TEXT_SHADOW } from '@/constants/colors'
 import RunConfigCard from '@/components/RunConfig/RunConfigCard.vue'
 import InstanceCard from '@/components/Instance/InstanceCard.vue'
@@ -151,7 +150,7 @@ const jsonStore = useJsonStore()
 const configRunStore = useConfigRunStore()
 
 // Sub-tab management
-const subTab = useLocalStorage('kommuflow_runs_subTab', 'time')
+const subTab = useLocalStorage(LS_KEYS.RUNS_SUBTAB, 'time')
 
 // Get all instances sorted by level (enriched with name and bossId for UI)
 const sortedInstances = computed(() => {
@@ -216,9 +215,8 @@ async function importRuns() {
 
 // Kamas/Time logic
 // Persist expanded hour runs as an array in localStorage; cards manage their own expansion.
-const expandedHourRuns = useLocalStorage('kommuflow_expanded_hour_runs', [])
-
-const timePeriod = useLocalStorage('kommuflow_time_period', 60)
+const expandedHourRuns = useLocalStorage(LS_KEYS.EXPANDED_HOUR_RUNS, [])
+const timePeriod = useLocalStorage(LS_KEYS.TIME_PERIOD, 60)
 
 // Validate time period input
 function validateTimePeriod(event) {

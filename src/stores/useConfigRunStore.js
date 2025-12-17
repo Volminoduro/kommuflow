@@ -3,9 +3,10 @@ import { ref, watch } from 'vue'
 import { useAppStore } from './useAppStore'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 
-const STORAGE_KEY = 'kommuflow_configs'
-const STORAGE_KEY_EXPANDED = 'kommuflow_configs_expanded'
+const STORAGE_KEY = LS_KEYS.CONFIG_RUNS
+const STORAGE_KEY_EXPANDED = LS_KEYS.CONFIG_RUNS_EXPANDED
 
 export const useConfigRunStore = defineStore('config', () => {
   // Structure: { instanceId: [{ id, isModulated, isBooster, stasis, steles, steleIntervention, time }] }

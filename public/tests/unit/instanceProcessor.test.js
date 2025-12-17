@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 
 // Mock stores used by the module to avoid Pinia/runtime issues
 vi.mock('@/stores/useJsonStore', () => {

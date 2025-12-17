@@ -1,13 +1,3 @@
-// Clés localStorage
-export const STORAGE_KEYS = {
-  CONFIG: 'kommuflow_config_v1',
-  LANGUAGE: 'kommuflow_language',
-  EXPANDED_INSTANCES: 'expandedInstances_v1'
-}
-
-// Couleurs de rareté Wakfu
-export { RARITY_COLORS } from './colors'
-
 // Tranches de niveau (20, puis de 15 en 15 jusqu'à 245)
 export const LEVEL_RANGES = [
   { min: 1, max: 20, label: '1-20' },

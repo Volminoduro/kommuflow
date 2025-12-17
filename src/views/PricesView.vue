@@ -267,9 +267,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 import { useClickOutside } from '@/composables/useClickOutside'
-import { COLOR_CLASSES } from '@/constants/colors'
-import { RARITY_COLORS } from '@/constants'
+import { COLOR_CLASSES, RARITY_COLORS } from '@/constants/colors'
 import { formatNumber } from '@/utils/formatters'
 import { useJsonStore } from '@/stores/useJsonStore'
 import { useI18n } from 'vue-i18n'
@@ -279,14 +279,14 @@ const { t } = useI18n()
 const jsonStore = useJsonStore()
 
 // Filters with localStorage persistence
-const searchName = useLocalStorage('kommuflow_prices_searchName', '')
-const filterRarities = useLocalStorage('kommuflow_prices_rarities', [0, 1, 2, 3, 4, 5, 6, 7], { deep: true })
-const filterLevelMin = useLocalStorage('kommuflow_prices_levelMin', '')
-const filterLevelMax = useLocalStorage('kommuflow_prices_levelMax', '')
-const sortColumn = useLocalStorage('kommuflow_prices_sortColumn', 'name')
-const sortDirection = useLocalStorage('kommuflow_prices_sortDirection', 'asc')
-const currentPage = useLocalStorage('kommuflow_prices_page', 1)
-const itemsPerPage = useLocalStorage('kommuflow_prices_perPage', 50)
+const searchName = useLocalStorage(LS_KEYS.PRICES_SEARCH_NAME, '')
+const filterRarities = useLocalStorage(LS_KEYS.PRICES_RARITIES, [0, 1, 2, 3, 4, 5, 6, 7], { deep: true })
+const filterLevelMin = useLocalStorage(LS_KEYS.PRICES_LEVEL_MIN, '')
+const filterLevelMax = useLocalStorage(LS_KEYS.PRICES_LEVEL_MAX, '')
+const sortColumn = useLocalStorage(LS_KEYS.PRICES_SORT_COLUMN, 'name')
+const sortDirection = useLocalStorage(LS_KEYS.PRICES_SORT_DIRECTION, 'asc')
+const currentPage = useLocalStorage(LS_KEYS.PRICES_PAGE, 1)
+const itemsPerPage = useLocalStorage(LS_KEYS.PRICES_PER_PAGE, 50)
 
 // Search autocomplete
 const showAutocomplete = ref(false)
@@ -311,7 +311,7 @@ const allInstancesList = computed(() => {
 
 // Instances filter with special initialization logic
 // Use `null` as the sentinel default so we can detect "never saved" without direct localStorage access
-const filterInstances = useLocalStorage('kommuflow_prices_instances', null, { deep: true })
+const filterInstances = useLocalStorage(LS_KEYS.PRICES_INSTANCES, null, { deep: true })
 
 // Initialize with all instances if never saved
 watch(allInstancesList, (newList) => {

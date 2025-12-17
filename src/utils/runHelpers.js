@@ -1,4 +1,5 @@
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 
 /**
  * Formate un run config en string lisible et concis
@@ -30,7 +31,7 @@ export function formatConfigRun(config) {
 }
 
 export function getNbCyclesForConfig(config) {
-  let nbCycles = config?.time ? Math.floor(useLocalStorage('kommuflow_time_period', 60).value / config.time) : 1
+  let nbCycles = config?.time ? Math.floor(useLocalStorage(LS_KEYS.TIME_PERIOD, 60).value / config.time) : 1
   if (config?.isRift) {
     const wavesCompleted = config.wavesCompleted || 1
     nbCycles *= wavesCompleted

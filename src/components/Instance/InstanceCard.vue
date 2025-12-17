@@ -37,6 +37,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { LS_KEYS } from '@/constants/localStorageKeys'
 import { useAppStore } from '@/stores/useAppStore'
 import { formatNumber, formatQuantity, formatRate } from '@/utils/formatters'
 import { formatConfigRun } from '@/utils/runHelpers'
@@ -59,8 +60,8 @@ const props = defineProps({
 })
 
 // Manage expanded state locally using different localStorage keys depending on mode.
-const expandedRun = useLocalStorage('kommuflow_expanded_run', [])
-const expandedHourRuns = useLocalStorage('kommuflow_expanded_hour_runs', [])
+const expandedRun = useLocalStorage(LS_KEYS.EXPANDED_RUN, [])
+const expandedHourRuns = useLocalStorage(LS_KEYS.EXPANDED_HOUR_RUNS, [])
 
 const isConfigRunMode = computed(() => !!props.config)
 
@@ -94,7 +95,7 @@ const INITIAL_ITEMS_SHOWN = 15
 const showAllItems = ref(false)
 
 const appStore = useAppStore()
-const localTimePeriod = useLocalStorage('kommuflow_time_period', 60)
+const localTimePeriod = useLocalStorage(LS_KEYS.TIME_PERIOD, 60)
 
 const iterationsPerPeriod = computed(() => {
   if (!props.config?.time || props.config.time === 0) return 0  
@@ -119,7 +120,7 @@ const displayInstance = computed(() => {
 })
 
 // Respect global detailed/minimal view toggle
-const detailedView = useLocalStorage('kommuflow_detailed_view', false)
+const detailedView = useLocalStorage(LS_KEYS.DETAILED_VIEW ?? 'kommuflow_detailed_view', false)
 
 const displayedItems = computed(() => {
   if (!displayInstance.value?.items) return []
